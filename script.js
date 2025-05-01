@@ -1,93 +1,67 @@
 javascript
-    document.getElementById('contactForm').addEventListener('submit', async function(event) { // Добавляем async для await
-        event.preventDefault(); // Предотвращаем стандартную отправку формы
+document.getElementById('contactFrm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем стандартную отправку формы
 
-        const form = event.target;
-        const nameInput = form.name;
-        const phoneInput = form.phone;
-        const truckModelInput = form.truck_model;
-        const messageInput = form.message;
-        const formStatus = document.getElementById('form-status');
-        const submitButton = form.querySelector('button[type="submit"]'); // Находим кнопку отправки
+    const form = event.target;
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const truckModel = form.truck_model.value.trim();
+    const message = form.message.value.trim();
+    const formStatus = document.getElementById('form-status');
 
-        // Получаем значения и убираем лишние пробелы
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.trim();
-        const truckModel = truckModelInput.value.trim();
-        const message = messageInput.value.trim();
+    // Простая валидация (можно добавить более сложную)
+    if (!name || !phone || !message) {
+        formStatus.textContent = 'Пожалуйста, заполните все обязательные поля.';
+        formStatus.className = 'form-status error'; // Добавляем класс для стилизации ошибки
+        return; // Прерываем выполнение, если поля не заполнены
+    }
 
-        // Простая валидация на стороне клиента (дублирует серверную)
-        if (!name || !phone || !message) {
-            formStatus.textContent = 'Пожалуйста, заполните все обязательные поля (Имя, Телефон, Описание).';
-            formStatus.className = 'form-status error'; // Стиль для ошибки
-            // Можно подсветить незаполненные поля
-            if (!name) nameInput.style.borderColor = 'red'; else nameInput.style.borderColor = '#ccc';
-            if (!phone) phoneInput.style.borderColor = 'red'; else phoneInput.style.borderColor = '#ccc';
-            if (!message) messageInput.style.borderColor = 'red'; else messageInput.style.borderColor = '#ccc';
-            return; // Прерываем выполнение
-        } else {
-             // Сбрасываем подсветку, если все заполнено
-             nameInput.style.borderColor = '#ccc';
-             phoneInput.style.borderColor = '#ccc';
-             messageInput.style.borderColor = '#ccc';
-        }
+    // --- Начало: Сбор данных для отправки ---
+    const formData = {
+        name: name,
+        phone: phone,
+        truckModel: truckModel || 'Не указана', // Если поле пустое
+        message: message
+    };
+
+    // Формируем сообщение для Telegram (или другого бэкенда)
+    let telegramMessage = `Новая заявка с сайта:\n\n`;
+    telegramMessage += `Имя: ${formData.name}\n`;
+    telegramMessage += `Телефон: ${formData.phone}\n`;
+    telegramMessage += `Марка/Модель: ${formData.truckModel}\n`;
+    telegramMessage += `Описание: ${formData.message}`;
+
+    console.log("Данные для отправки:", telegramMessage); // Выводим в консоль для отладки
+
+    // --- Конец: Сбор данных для отправки ---
 
 
-        // --- Подготовка данных для отправки ---
-        const formData = {
-            name: name,
-            phone: phone,
-            truckModel: truckModel || 'Не указана', // Если поле пустое, ставим заглушку
-            message: message
-        };
+    // --- Начало: Имитация отправки и отображение статуса ---
+    // В РЕАЛЬНОМ ПРИЛОЖЕНИИ ЗДЕСЬ БУДЕТ КОД ОТПРАВКИ НА БЭКЕНД (AJAX/Fetch)
 
-        // --- Отправка данных на сервер (PHP скрипт) ---
-        formStatus.textContent = 'Отправка данных...';
-        formStatus.className = 'form-status'; // Сбрасываем стили статуса
-        submitButton.disabled = true; // Блокируем кнопку на время отправки
-        submitButton.style.opacity = '0.7'; // Визуально показываем неактивность
+    formStatus.textContent = 'Отправка данных...';
+    formStatus.className = 'form-status'; // Сбрасываем классы ошибки/успеха
 
-        try {
-            // ВНИМАНИЕ! Замените '/путь/к/вашему/скрипту/send_telegram.php' на РЕАЛЬНЫЙ URL вашего PHP файла
-            const response = await fetch('https://github.com/remontcars/remontcars.github.io/main/send_telegram.php', {
-                method: 'POST',
-                headers: {
-                    // Сообщаем серверу, что отправляем JSON
-                    'Content-Type': 'application/json'
-                },
-                // Преобразуем JavaScript объект в JSON строку для отправки
-                body: JSON.stringify(formData)
-            });
+    // Имитируем задержку сети (удалить в реальном приложении)
+    setTimeout(() => {
+        // Имитируем успешную отправку
+        formStatus.textContent = 'Спасибо! Ваша заявка принята. Мы скоро свяжемся с вами.';
+        formStatus.className = 'form-status success'; // Класс для стилизации успеха
+        form.reset(); // Очищаем поля формы
 
-            // Получаем ответ от сервера и пытаемся его распарсить как JSON
-            const result = await response.json();
+        // Можно добавить код для скрытия сообщения через несколько секунд
+        // setTimeout(() => { formStatus.textContent = ''; }, 5000);
 
-            // Проверяем HTTP статус и флаг 'success' из ответа PHP
-            if (response.ok && result.success) {
-                // Успешная отправка
-                formStatus.textContent = result.message || 'Спасибо! Ваша заявка принята. Мы скоро свяжемся с вами.'; // Используем сообщение от PHP
-                formStatus.className = 'form-status success'; // Стиль для успеха
-                form.reset(); // Очищаем поля формы
-            } else {
-                // Ошибка отправки (либо HTTP ошибка, либо success: false от PHP)
-                formStatus.textContent = `Ошибка: ${result.message || 'Не удалось отправить заявку.'}`;
-                formStatus.className = 'form-status error'; // Стиль для ошибки
-                console.error('Ошибка от сервера:', result); // Выводим ошибку в консоль браузера
-            }
+    }, 1500); // Задержка 1.5 секунды
 
-        } catch (error) {
-            // Ошибка сети или ошибка при обработке JSON ответа
-            console.error("Ошибка fetch:", error);
-            formStatus.textContent = 'Сетевая ошибка или ошибка ответа сервера. Пожалуйста, попробуйте позже.';
-            formStatus.className = 'form-status error';
-        } finally {
-            // Этот блок выполнится в любом случае (успех или ошибка)
-            submitButton.disabled = false; // Разблокируем кнопку
-             submitButton.style.opacity = '1'; // Возвращаем нормальную прозрачность
-        }
-    });
-    ```
-3.  **Найдите строку:**
-    `const response = await fetch('/путь/к/вашему/скрипту/send_telegram.php', {`
-4.  **Замените** `/путь/к/вашему/скрипту/send_telegram.php` на **реальный публичный URL**, который вы получили на Шаге 2 (пункт 6). Например:
-    `const response = await fetch('https://vash-sait.ru/send_telegram.php', {`
+    // Пример имитации ошибки (раскомментируйте для теста)
+    /*
+    setTimeout(() => {
+        formStatus.textContent = 'Ошибка отправки. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.';
+        formStatus.className = 'form-status error';
+    }, 1500);
+    */
+
+    // --- Конец: Имитация отправки ---
+
+});
