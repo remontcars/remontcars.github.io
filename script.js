@@ -49,7 +49,7 @@ javascript
 
         try {
             // ВНИМАНИЕ! Замените '/путь/к/вашему/скрипту/send_telegram.php' на РЕАЛЬНЫЙ URL вашего PHP файла
-            const response = await fetch('https://github.com/remontcars/remontcars.github.io/blob/main/send_telegram.php', {
+            const response = await fetch('https://github.com/remontcars/remontcars.github.io/main/send_telegram.php', {
                 method: 'POST',
                 headers: {
                     // Сообщаем серверу, что отправляем JSON
