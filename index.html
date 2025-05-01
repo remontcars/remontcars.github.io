@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ремонт Грузовиков - [Название Вашей Компании]</title>
+    <meta name="description" content="Профессиональный ремонт и обслуживание грузовых автомобилей. Диагностика, ТО, ремонт двигателей, ходовой части и многое другое.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">[Название Компании]</div>
+            <nav class="nav">
+                <a href="#services">Услуги</a>
+                <a href="#about">О нас</a>
+                <a href="#contact">Контакты</a>
+                <a href="#request-form" class="cta-button-nav">Оставить заявку</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>Профессиональный Ремонт Грузовиков</h1>
+            <p>Надежное обслуживание и ремонт вашего коммерческого транспорта.</p>
+            <a href="#request-form" class="cta-button">Получить консультацию</a>
+        </div>
+        <!-- Замените 'hero-truck.jpg' на реальное фото -->
+        <img src="images/hero-truck.jpg" alt="Грузовик на дороге" class="hero-bg-image">
+    </section>
+
+    <main class="main-content">
+        <div class="container">
+
+            <section id="services" class="services">
+                <h2>Наши Услуги</h2>
+                <div class="service-items">
+                    <div class="service-item">
+                        <!-- Замените 'service-diagnostics.jpg' -->
+                        <img src="images/service-diagnostics.jpg" alt="Диагностика грузовика">
+                        <h3>Компьютерная Диагностика</h3>
+                        <p>Современное оборудование для точного определения неисправностей.</p>
+                    </div>
+                    <div class="service-item">
+                         <!-- Замените 'service-engine.jpg' -->
+                        <img src="images/service-engine.jpg" alt="Ремонт двигателя грузовика">
+                        <h3>Ремонт Двигателя</h3>
+                        <p>Капитальный и текущий ремонт дизельных двигателей любой сложности.</p>
+                    </div>
+                    <div class="service-item">
+                         <!-- Замените 'service-chassis.jpg' -->
+                        <img src="images/service-chassis.jpg" alt="Ремонт ходовой части">
+                        <h3>Ремонт Ходовой Части</h3>
+                        <p>Ремонт подвески, тормозной системы, рулевого управления.</p>
+                    </div>
+                     <div class="service-item">
+                         <!-- Замените 'service-to.jpg' -->
+                        <img src="images/service-to.jpg" alt="Техническое обслуживание">
+                        <h3>Техническое Обслуживание</h3>
+                        <p>Плановое ТО, замена масел,фильтров и технических жидкостей.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about">
+                 <!-- Замените 'about-workshop.jpg' -->
+                 <img src="images/about-workshop.jpg" alt="Мастерская по ремонту грузовиков" class="about-image">
+                 <div class="about-text">
+                     <h2>Почему выбирают нас?</h2>
+                     <p><strong>[Название Вашей Компании]</strong> – это команда опытных механиков, специализирующихся на ремонте и обслуживании грузовых автомобилей европейских, американских и отечественных марок.</p>
+                     <ul>
+                         <li>✅ Многолетний опыт работы</li>
+                         <li>✅ Гарантия на выполненные работы</li>
+                         <li>✅ Использование качественных запчастей</li>
+                         <li>✅ Соблюдение сроков ремонта</li>
+                         <li>✅ Индивидуальный подход к каждому клиенту</li>
+                     </ul>
+                 </div>
+            </section>
+
+            <section id="request-form" class="request-form-section">
+                <h2>Оставить Заявку на Ремонт</h2>
+                <p>Заполните форму ниже, и наш менеджер свяжется с вами в ближайшее время для уточнения деталей.</p>
+                <form id="contactForm"action=" https://formspree.io/f/mblodvka" method="POST">
+                    <div class="form-group">
+                        <label for="name">Ваше Имя:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Контактный Телефон:</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="form-group">
+                        <label for="truck_model">Марка и Модель Грузовика (по желанию):</label>
+                        <input type="text" id="truck_model" name="truck_model">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Краткое описание проблемы:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="cta-button">Отправить Заявку</button>
+                </form>
+                <div id="form-status" class="form-status"></div>
+            </section>
+
+            <section id="contact" class="contact-info">
+                <h2>Наши Контакты</h2>
+                <p><strong>Адрес:</strong> [Ваш Адрес, Город, Улица, Дом]</p>
+                <p><strong>Телефон:</strong> <a href="tel:+7XXXXXXXXXX">[Ваш Контактный Телефон]</a></p>
+                <p><strong>Email:</strong> <a href="mailto:your-email@example.com">[Ваш Email]</a></p>
+                <p><strong>Часы работы:</strong> [Ваши Часы Работы, например: Пн-Пт: 9:00 - 18:00]</p>
+                <!-- Сюда можно добавить карту, если нужно -->
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 [Название Вашей Компании]. Все права защищены.</p>
+            <!-- Можно добавить ссылки на соцсети -->
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
